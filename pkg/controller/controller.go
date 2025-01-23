@@ -19,6 +19,8 @@ package controller
 import (
 	"context"
 	"fmt"
+	authv1 "k8s.io/api/authorization/v1"
+	"k8s.io/client-go/dynamic"
 	"net/http"
 	"os"
 	"strings"
