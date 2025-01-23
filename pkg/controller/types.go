@@ -18,6 +18,9 @@ package controller
 
 import (
 	"container/list"
+	"k8s.io/apimachinery/pkg/runtime/schema"
+	"k8s.io/client-go/dynamic"
+	"k8s.io/client-go/informers"
 	"net/http"
 	"sync"
 
