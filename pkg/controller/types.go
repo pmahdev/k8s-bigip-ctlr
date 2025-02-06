@@ -25,14 +25,6 @@ import (
 	"k8s.io/client-go/dynamic"
 	"k8s.io/client-go/informers"
 
-	"k8s.io/apimachinery/pkg/runtime/schema"
-	"k8s.io/client-go/dynamic"
-	"k8s.io/client-go/informers"
-
-	"k8s.io/apimachinery/pkg/runtime/schema"
-	"k8s.io/client-go/dynamic"
-	"k8s.io/client-go/informers"
-
 	cisapiv1 "github.com/F5Networks/k8s-bigip-ctlr/v2/config/apis/cis/v1"
 	"github.com/F5Networks/k8s-bigip-ctlr/v2/pkg/vxlan"
 
