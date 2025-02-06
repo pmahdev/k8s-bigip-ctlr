@@ -89,7 +89,6 @@ type (
 		discoveryMode               discoveryMode
 		clusterRatio                map[string]*int
 		clusterAdminState           map[string]clustermanager.AdminState
-		ResourceStatusVSAddressMap  map[resourceRef]string
 		resourceContext
 	}
 	resourceContext struct {
@@ -100,18 +99,15 @@ type (
 	}
 
 	InformerStore struct {
-		comInformers     map[string]*CommonInformer
-		nrInformers      map[string]*NRInformer
-		crInformers      map[string]*CRInformer
-		nsInformers      map[string]*NSInformer
-		nodeInformer     *NodeInformer
-		dynamicInformers *DynamicInformers
+		comInformers map[string]*CommonInformer
+		nrInformers  map[string]*NRInformer
+		crInformers  map[string]*CRInformer
+		nsInformers  map[string]*NSInformer
+		nodeInformer *NodeInformer
 	}
 
 	ClusterHandler struct {
-		ClusterConfigs map[string]*ClusterConfig
-		*PrimaryClusterHealthProbeParams
-		MultiClusterMode    string
+		ClusterConfigs      map[string]*ClusterConfig
 		HAPairClusterName   string
 		LocalClusterName    string
 		uniqueAppIdentifier map[string]struct{}
@@ -119,8 +115,6 @@ type (
 		namespaces          []string
 		nodeLabelSelector   string
 		routeLabel          string
-		orchestrationCNI    string
-		staticRoutingMode   bool
 		eventQueue          workqueue.RateLimitingInterface
 		statusUpdate        *StatusUpdate
 		sync.RWMutex
@@ -133,15 +127,12 @@ type (
 		kubeCRClient           versioned.Interface
 		kubeIPAMClient         *extClient.Clientset
 		routeClientV1          routeclient.RouteV1Interface
-		dynamicClient          dynamic.Interface
 		routeLabel             string
 		nativeResourceSelector labels.Selector
 		customResourceSelector labels.Selector
 		namespaces             map[string]struct{}
 		namespaceLabel         string
 		nodeLabelSelector      string
-		orchestrationCNI       string
-		staticRoutingMode      bool
 		oldNodes               []Node
 		eventNotifier          *EventNotifier
 		*InformerStore
@@ -160,12 +151,6 @@ type (
 		Timestamp         metav1.Time
 		IPSet             bool // helps in event creation of LB service as it helps to know if the status update is for IP setting or unsetting
 		ClearKeyFromCache bool // helps clear the cache in case of delete events
-	}
-
-	BlockAffinitycidr struct {
-		baName   string
-		nodeName string
-		cidr     string
 	}
 
 	ResourceEvent struct {
@@ -248,14 +233,6 @@ type (
 		clusterName string
 		nsInformer  cache.SharedIndexInformer
 	}
-
-	//DynamicInformers holds informers for third party integration
-	DynamicInformers struct {
-		stopCh                      chan struct{}
-		clusterName                 string
-		CalicoBlockAffinityInformer informers.GenericInformer
-	}
-
 	rqKey struct {
 		namespace      string
 		kind           string
@@ -1473,9 +1450,8 @@ const (
 type HAModeType string
 
 const (
-	StatusOk      = "OK"
-	StatusError   = "ERROR"
-	StatusStandby = "STANDBY"
+	StatusOk    = "OK"
+	StatusError = "ERROR"
 )
 
 type discoveryMode string
@@ -1547,14 +1523,5 @@ type (
 	}
 	MultiClusterServiceConfig struct {
 		svcPort intstr.IntOrString
-	}
-)
-
-var (
-	// CalicoBlockaffinity : Calico's BlockAffinity CRD resource identifier
-	CalicoBlockaffinity = schema.GroupVersionResource{
-		Group:    "crd.projectcalico.org",
-		Version:  "v1",
-		Resource: "blockaffinities",
 	}
 )
